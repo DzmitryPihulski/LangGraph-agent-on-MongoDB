@@ -11,4 +11,4 @@ graph.add_edge(START, "Input Validator")
 graph.add_edge("Input Validator", "Exploration Node")
 graph.add_edge("Exploration Node", END)
 
-compiled_graph = graph.compile()
+compiled_graph = graph.compile(debug=True)

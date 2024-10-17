@@ -1,17 +1,26 @@
 from fastapi import FastAPI
 from graph.graph import compiled_graph
 from langserve import add_routes
+from models.graph_models import InputModel
 import uvicorn
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(
     title="LangChain agent",
     version="1.0",
     description="",
 )
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 add_routes(
     app,
-    compiled_graph,
+    compiled_graph.with_types(input_type=InputModel),
 )
 
 if __name__ == "__main__":

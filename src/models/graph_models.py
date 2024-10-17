@@ -1,17 +1,20 @@
 from typing import Annotated, List
 from typing_extensions import TypedDict
-from langchain_core.messages import AIMessage, HumanMessage, ToolMessage
+from langchain_core.messages import AIMessage, HumanMessage
 from langgraph.graph.message import add_messages
 
 
 class State(TypedDict):
     human_input: Annotated[str, "The initial query."]
     messages: Annotated[
-        List[AIMessage | HumanMessage | ToolMessage],
+        List[AIMessage | HumanMessage],
         add_messages,
         "Messages between nodes.",
     ]
 
 
 class Config(TypedDict):
-    langchain_key: Annotated[str, "The key for the LLMs."]
+    pass
+
+class InputModel(TypedDict):
+    human_input: Annotated[str, "The initial query."]
