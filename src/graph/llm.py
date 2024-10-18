@@ -1,4 +1,5 @@
 from langchain_mistralai import ChatMistralAI
+
 from config import static_config
 
 MistralLLM = ChatMistralAI(

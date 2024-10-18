@@ -1,8 +1,10 @@
-from models.db_models import MongoConfig
+from typing import Literal
+
 from pymongo import MongoClient
 from pymongo.collection import Collection
 from pymongo.database import Database
-from typing import Literal
+
+from models.db_models import MongoConfig
 
 
 class MongoDatabase:

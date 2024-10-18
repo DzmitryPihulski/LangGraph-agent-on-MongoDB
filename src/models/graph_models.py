@@ -1,7 +1,8 @@
 from typing import Annotated, List
-from typing_extensions import TypedDict
+
 from langchain_core.messages import AIMessage, HumanMessage
 from langgraph.graph.message import add_messages
+from typing_extensions import TypedDict
 
 
 class State(TypedDict):
@@ -15,6 +16,7 @@ class State(TypedDict):
 
 class Config(TypedDict):
     pass
+
 
 class InputModel(TypedDict):
     human_input: Annotated[str, "The initial query."]

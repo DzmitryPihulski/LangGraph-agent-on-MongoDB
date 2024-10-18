@@ -1,9 +1,10 @@
-from fastapi import FastAPI
-from graph.graph import compiled_graph
-from langserve import add_routes
-from models.graph_models import InputModel
 import uvicorn
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from langserve import add_routes
+
+from graph.graph import compiled_graph
+from models.graph_models import InputModel
 
 app = FastAPI(
     title="LangChain agent",
