@@ -4,6 +4,14 @@ from pymongo import MongoClient
 from pymongo.collection import Collection
 from pymongo.database import Database
 
+from config import (
+    MONGO_COLLECTION_NAME,
+    MONGO_DB_NAME,
+    MONGO_HOST,
+    MONGO_LOGIN,
+    MONGO_PASSWORD,
+    MONGO_PORT,
+)
 from models.db_models import MongoConfig
 
 
@@ -27,3 +35,13 @@ class MongoDatabase:
     def disconnect(self) -> Literal[True]:
         self.__mongo_client.close()
         return True
+
+
+airbnb_db = MongoConfig(
+    MONGO_PORT=MONGO_PORT,
+    MONGO_HOST=MONGO_HOST,
+    MONGO_DB_NAME=MONGO_DB_NAME,
+    MONGO_COLLECTION_NAME=MONGO_COLLECTION_NAME,
+    MONGO_LOGIN=MONGO_LOGIN,
+    MONGO_PASSWORD=MONGO_PASSWORD,
+)
