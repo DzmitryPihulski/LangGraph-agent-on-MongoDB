@@ -12,7 +12,9 @@ from graph.llm import MistralLLM
 from models.graph_models import State
 
 
-def input_validator(state: State, config: RunnableConfig) -> Dict:
+def input_validator(
+    state: State, config: RunnableConfig
+) -> Dict[str, list[HumanMessage]]:
     human_input = state["human_input"].replace("'", "").replace("`", "")
     if (
         detect(state["human_input"]) != "en"
@@ -24,8 +26,10 @@ def input_validator(state: State, config: RunnableConfig) -> Dict:
     return {"messages": [HumanMessage(content=human_input)]}
 
 
-def exploration_node(state: State, config: RunnableConfig) -> Dict:
-    response = MistralLLM.invoke(input=state["messages"][-1].content)
+def exploration_node(
+    state: State, config: RunnableConfig
+) -> Dict[str, list[AIMessage]]:
+    response = MistralLLM.invoke(input=str(state["messages"][-1].content))
     return {"messages": [AIMessage(content=response.content)]}
 
 
@@ -35,17 +39,14 @@ def mongo_tool():
     return None
 
 
-mongo_tools = [mongo_tool]
-
-tools_by_name = {tool.name: tool for tool in mongo_tools}
-
-
 # CUSTOM TOOL NODE
-def customtool_node(state: State, config: RunnableConfig) -> Dict:
+def customtool_node(
+    state: State, config: RunnableConfig
+) -> Dict[str, list[ToolMessage | None]]:
     outputs = []
     if isinstance(state["messages"][-1], AIMessage):
         for tool_call in state["messages"][-1].tool_calls:
-            tool_result = tools_by_name[tool_call["name"]].invoke(tool_call["args"])
+            tool_result = mongo_tool.invoke(tool_call["args"])
             outputs.append(
                 ToolMessage(
                     content=json.dumps(tool_result),
@@ -53,5 +54,4 @@ def customtool_node(state: State, config: RunnableConfig) -> Dict:
                     tool_call_id=tool_call["id"],
                 )
             )
-
     return {"messages": outputs}

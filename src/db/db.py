@@ -1,4 +1,4 @@
-from typing import Literal
+from typing import Any, Dict, Literal
 
 from pymongo import MongoClient
 from pymongo.collection import Collection
@@ -16,7 +16,7 @@ class MongoDatabase:
             "username": self.config.MONGO_LOGIN,
             "password": self.config.MONGO_PASSWORD,
         }
-        self.__mongo_client: MongoClient = MongoClient(
+        self.__mongo_client: MongoClient[Dict[str, Any]] = MongoClient(
             f"{self.config.MONGO_HOST}:{self.config.MONGO_PORT}",
             **auth_kwargs,
         )

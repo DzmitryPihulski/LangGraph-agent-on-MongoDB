@@ -1,7 +1,7 @@
 from typing import Annotated, List
 
 from langchain_core.messages import AIMessage, HumanMessage
-from langgraph.graph.message import add_messages
+from langgraph.graph.message import add_messages  # type: ignore
 from typing_extensions import TypedDict
 
 

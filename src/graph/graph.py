@@ -1,6 +1,6 @@
 from langgraph.graph import END, START, StateGraph
 
-from graph.nodes import exploration_node, input_validator
+from graph.nodes import exploration_node, input_validator  # type: ignore
 from models.graph_models import State
 
 graph = StateGraph(state_schema=State)
