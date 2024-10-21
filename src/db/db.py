@@ -37,7 +37,7 @@ class MongoDatabase:
         return True
 
 
-airbnb_db = MongoConfig(
+airbnb_config = MongoConfig(
     MONGO_PORT=MONGO_PORT,
     MONGO_HOST=MONGO_HOST,
     MONGO_DB_NAME=MONGO_DB_NAME,
@@ -45,3 +45,5 @@ airbnb_db = MongoConfig(
     MONGO_LOGIN=MONGO_LOGIN,
     MONGO_PASSWORD=MONGO_PASSWORD,
 )
+
+airbnb_db = MongoDatabase(airbnb_config)
