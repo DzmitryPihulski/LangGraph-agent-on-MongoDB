@@ -1,5 +1,5 @@
 import json
-from typing import Dict
+from typing import Dict, Union
 
 from langchain_core.messages import AIMessage, HumanMessage, ToolMessage
 from langchain_core.runnables.config import RunnableConfig
@@ -34,7 +34,7 @@ def mongo_tool(filter: Dict, projection: Dict):
 # CUSTOM TOOL NODE
 def custom_tool_node(
     state: State, config: RunnableConfig
-) -> Dict[str, list[ToolMessage | None]]:
+) -> Dict[str, list[Union[ToolMessage, None]]]:
     outputs = []
     if isinstance(state["messages"][-1], AIMessage):
         for tool_call in state["messages"][-1].tool_calls:
