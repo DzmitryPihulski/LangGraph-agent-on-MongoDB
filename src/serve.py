@@ -1,4 +1,3 @@
-import uvicorn
 from fastapi import BackgroundTasks, FastAPI, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -40,7 +39,3 @@ add_routes(
 async def refresh_data(background_task: BackgroundTasks) -> JSONResponse:
     background_task.add_task(fetch_sample_data)
     return JSONResponse(content="Job created", status_code=status.HTTP_200_OK)
-
-
-if __name__ == "__main__":
-    uvicorn.run(app=app, host="0.0.0.0", port=1234)
