@@ -2,10 +2,13 @@ import json
 from typing import Dict, Union
 
 from langchain_core.messages import AIMessage, HumanMessage, ToolMessage
+from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables.config import RunnableConfig
 from langchain_core.tools import tool
 
+from components.prompts import EXPLORATION_AGENT_NODE
 from db.db import airbnb_db
+from db.scheme import MONGO_DB_SCHEME, SAMPLE_DOCUMENT
 from graph.llm import MistralLLM
 from models.graph_models import State
 
@@ -28,7 +31,7 @@ def mongo_tool(filter: Dict, projection: Dict):
     Returns:
         list: response
     """
-    return airbnb_db.collection.find(filter=filter, projection=projection).to_list()
+    return list(airbnb_db.collection.find(filter=filter, projection=projection))
 
 
 # CUSTOM TOOL NODE
@@ -52,6 +55,22 @@ def custom_tool_node(
 def exploration_node(
     state: State, config: RunnableConfig
 ) -> Dict[str, list[AIMessage]]:
+    template = ChatPromptTemplate(
+        [
+            ("system", EXPLORATION_AGENT_NODE),
+            ("human", "{user_query}"),
+        ]
+    )
+
+    prompt_value = template.invoke(
+        {
+            "mongo_scheme": MONGO_DB_SCHEME,
+            "sample_doc": SAMPLE_DOCUMENT,
+            "user_query": str(state["messages"][-1].content),
+        }
+    )
+
     llm_with_tools = MistralLLM.bind_tools([mongo_tool])
-    response = llm_with_tools.invoke(input=str(state["messages"][-1].content))
-    return {"messages": [AIMessage(content=response.content)]}
+
+    response = llm_with_tools.invoke(input=prompt_value)
+    return {"messages": [response]}

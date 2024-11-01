@@ -96,7 +96,6 @@ MONGO_DB_SCHEME = """
 
 SAMPLE_DOCUMENT = """
 {
-  "_id": "10006546",
   "listing_url": "https://www.airbnb.com/rooms/10006546",
   "name": "Ribeira Charming Duplex",
   "summary": "Fantastic duplex apartment",
