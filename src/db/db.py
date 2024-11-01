@@ -20,13 +20,8 @@ class MongoDatabase:
         self.config: MongoConfig = config
 
     def connect(self) -> Literal[True]:
-        auth_kwargs = {
-            "username": self.config.MONGO_LOGIN,
-            "password": self.config.MONGO_PASSWORD,
-        }
         self.__mongo_client: MongoClient[Dict[str, Any]] = MongoClient(
-            f"{self.config.MONGO_HOST}:{self.config.MONGO_PORT}",
-            **auth_kwargs,
+            f"mongodb://{self.config.MONGO_LOGIN}:{self.config.MONGO_PASSWORD}@mongodb:{self.config.MONGO_PORT}"
         )
         self.__db = Database(self.__mongo_client, self.config.MONGO_DB_NAME)
         self.collection = Collection(self.__db, self.config.MONGO_COLLECTION_NAME)
