@@ -20,3 +20,7 @@ class Config(TypedDict):
 
 class InputModel(TypedDict):
     human_input: Annotated[str, "The initial query."]
+
+
+class OutputModel(TypedDict):
+    messages: Annotated[str, "Messages between nodes."]
