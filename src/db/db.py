@@ -27,6 +27,9 @@ class MongoDatabase:
         self.collection = Collection(self.__db, self.config.MONGO_COLLECTION_NAME)
         return True
 
+    def get_the_number_of_docs(self) -> int:
+        return len(self.collection.find({}).to_list())
+
     def disconnect(self) -> Literal[True]:
         self.__mongo_client.close()
         return True
