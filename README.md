@@ -16,6 +16,16 @@ The idea is that the user nows the type of information in the DB and instead of 
 
 ## Structure of the Graph
 
+1. The user asks the question at the `__start__`
+2. The question is preprocessed in the `Input Validator`
+3. `Exploration Node` creates query to the `MongoDB`
+4. The query is executed in the `MongoDB` node.
+5. User gets the answer at the `__end__`
+
+<p align="center">
+  <img src="data/structure.jpeg" alt="Structure" style="border: 10px solid #22a2b6;">
+</p>
+
 ## As environment variables
 
 `.env`
