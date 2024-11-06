@@ -6,7 +6,7 @@
   <img src="https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white"/>
 </p>
 
-# LangGraph Agent for MongoDB Project
+# LangGraph Agent for MongoDB
 
 LangGraph is a powerful tool designed to manage the LLM agents by inroducing graph structure between different stages(Nodes) of the pipeline.
 
@@ -15,14 +15,6 @@ This agent helps MongoDB for efficient retrieval in natural language.
 The idea is that the user nows the type of information in the DB and instead of using SQL, NoSQL queries, asks agent in natural language, than the agent does the search.
 
 ## Structure of the Graph
-
-## API
-
-Run with `project_name run` and access http://127.0.0.1:8000/docs
-
-![](https://raw.githubusercontent.com/rochacbruno/fastapi-project-template/master/docs/api.png)
-
-**For some api calls you must authenticate** using the user created with `project_name create-user`.
 
 ## As environment variables
 
@@ -49,6 +41,12 @@ MONGO_LOGIN = '' # for example 'root'
 MONGO_PASSWORD = '' # for example 'example'
 ```
 
+## API
+
+Run with `docker compose up -d --build` and access http://127.0.0.1:1234/docs
+
+![](data/image.png)
+
 ## Installation
 
 ```bash
@@ -58,4 +56,7 @@ cd LangGraph-agent-on-MongoDB
 
 # Install dependencies
 pip install -r requirements.txt
+
+# Run docker network with
+docker compose up -d --build
 ```
