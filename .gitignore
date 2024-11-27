@@ -1,7 +1,8 @@
 /.venv
-/**/__*
-/**/**/__*
+/**/__pycache__
+/**/**/__pycache__
 /__*
 /**/.env
 /.env
-/.*
+.vscode
+.pdm-python

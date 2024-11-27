@@ -1,10 +1,10 @@
 import json
-from typing import Dict, Union
+from typing import Any, Dict, List, Union
 
 from langchain_core.messages import AIMessage, HumanMessage, ToolMessage
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables.config import RunnableConfig
-from langchain_core.tools import tool
+from langchain_core.tools import tool  # type: ignore
 
 from components.prompts import EXPLORATION_AGENT_NODE
 from db.db import airbnb_db
@@ -21,8 +21,10 @@ def input_validator(
     return {"messages": [HumanMessage(content=human_input)]}
 
 
-@tool("mongo_tool")
-def mongo_tool(filter: Dict, projection: Dict):
+@tool("mongo_tool")  # type: ignore
+def mongo_tool(
+    filter: Dict[str, Any], projection: Dict[str, Any]
+) -> List[Dict[str, Any]]:
     """Exists to execute queries.
 
     Args:
@@ -39,14 +41,14 @@ def mongo_tool(filter: Dict, projection: Dict):
 def custom_tool_node(
     state: State, config: RunnableConfig
 ) -> Dict[str, list[Union[ToolMessage, None]]]:
-    outputs = list()
+    outputs: List[ToolMessage] = list()
     if isinstance(state["messages"][-1], AIMessage):
         for tool_call in state["messages"][-1].tool_calls:
             arguments = tool_call["args"].copy()
             print("Arguments: ", arguments)
             if "_id" not in arguments["projection"]:
                 arguments["projection"]["_id"] = 0
-            tool_result = mongo_tool.invoke(arguments, config=config)
+            tool_result = mongo_tool.invoke(arguments, config=config)  # type: ignore
             outputs.append(
                 ToolMessage(
                     content=json.dumps(tool_result),
@@ -55,7 +57,7 @@ def custom_tool_node(
                 )
             )
     return {
-        "messages": outputs,
+        "messages": outputs,  # type: ignore
         "answer": str([str(output.content) for output in outputs]),  # type: ignore
     }
 
@@ -63,7 +65,7 @@ def custom_tool_node(
 def exploration_node(
     state: State, config: RunnableConfig
 ) -> Dict[str, list[AIMessage]]:
-    shots = vector_db.search(str(state["messages"][-1].content))
+    shots = vector_db.search(str(state["messages"][-1].content))  # type: ignore
     template = ChatPromptTemplate(
         [
             ("system", EXPLORATION_AGENT_NODE),
@@ -71,11 +73,11 @@ def exploration_node(
         ]
     )
 
-    prompt_value = template.invoke(
+    prompt_value = template.invoke(  # type: ignore
         {
             "mongo_scheme": MONGO_DB_SCHEME,
             "sample_doc": SAMPLE_DOCUMENT,
-            "user_query": str(state["messages"][-1].content),
+            "user_query": str(state["messages"][-1].content),  # type: ignore
             "few_shot_query_1": HumanMessage(content=shots[0]["text"]).pretty_repr(),
             "few_shot_answer_1": AIMessage(
                 content=str(shots[0]["metadata"])
@@ -100,8 +102,8 @@ def exploration_node(
         config=config,
     )
 
-    llm_with_tools = MistralLLM.bind_tools([mongo_tool])
+    llm_with_tools = MistralLLM.bind_tools([mongo_tool])  # type: ignore
     print("PROMPT FOR RESEARCH LLM:", prompt_value)
     response = llm_with_tools.invoke(input=prompt_value)
     print("RESPONSE: ", response)
-    return {"messages": [response]}
+    return {"messages": [response]}  # type: ignore

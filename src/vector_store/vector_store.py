@@ -70,7 +70,7 @@ class VectorStore:
         except Exception as e:
             raise RuntimeError(f"Failed to load word embeddings model: {str(e)}")  # noqa: B904
 
-    def _get_word_vector(self, word: str) -> np.ndarray:
+    def _get_word_vector(self, word: str) -> np.ndarray:  # type: ignore
         """
         Get the embedding vector for a single word.
 
@@ -81,7 +81,7 @@ class VectorStore:
             Numpy array containing the word vector
         """
         try:
-            return self.model[word]
+            return self.model[word]  # type: ignore
         except KeyError:
             return np.zeros(self.embedding_dim)
 
@@ -99,8 +99,8 @@ class VectorStore:
         if not words:
             return [0.0] * self.embedding_dim
 
-        vectors = [self._get_word_vector(word) for word in words]
-        embedding = np.mean(vectors, axis=0)
+        vectors = [self._get_word_vector(word) for word in words]  # type: ignore
+        embedding = np.mean(vectors, axis=0)  # type: ignore
         return embedding.tolist()
 
     def add_documents(self, documents: List[Shot], batch_size: int = 100) -> None:
@@ -127,7 +127,10 @@ class VectorStore:
             metadatas = [{"tool_calls": str(doc.tool_call)} for doc in batch]
 
             self.collection.add(
-                ids=ids, embeddings=embeddings, documents=texts, metadatas=metadatas
+                ids=ids,
+                embeddings=embeddings,  # type: ignore
+                documents=texts,
+                metadatas=metadatas,  # type: ignore
             )
 
     def search(
@@ -155,21 +158,21 @@ class VectorStore:
         query_embedding = self._create_embedding(query)
 
         results = self.collection.query(
-            query_embeddings=[query_embedding],
+            query_embeddings=[query_embedding],  # type: ignore
             n_results=n_results,
         )
 
         # Format results
         formatted_results = []
         for idx in range(len(results["ids"][0])):
-            formatted_results.append(
+            formatted_results.append(  # type: ignore
                 {
-                    "text": results["documents"][0][idx],
-                    "metadata": eval(results["metadatas"][0][idx]["tool_calls"]),
+                    "text": results["documents"][0][idx],  # type: ignore
+                    "metadata": eval(results["metadatas"][0][idx]["tool_calls"]),  # type: ignore
                 }
             )
 
-        return formatted_results
+        return formatted_results  # type: ignore
 
 
 vector_db = VectorStore()
