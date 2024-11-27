@@ -12,6 +12,7 @@ class State(TypedDict):
         add_messages,
         "Messages between nodes.",
     ]
+    answer: Annotated[Union[str, None], "Final response"]
 
 
 class Config(TypedDict):
@@ -23,4 +24,4 @@ class InputModel(TypedDict):
 
 
 class OutputModel(TypedDict):
-    messages: Annotated[str, "Messages between nodes."]
+    answer: Annotated[Union[str, None], "Final response"]
