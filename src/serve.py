@@ -23,7 +23,7 @@ app = FastAPI(
     title="LangChain agent",
     version="1.0",
     description="",
-    lifespan=lifespan,
+    lifespan=lifespan,  # type: ignore
     openapi_tags=tags_metadata,
 )
 app.add_middleware(

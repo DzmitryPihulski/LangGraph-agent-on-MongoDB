@@ -1,4 +1,4 @@
-from langgraph.graph import END, START, StateGraph
+from langgraph.graph import END, START, StateGraph  # type: ignore
 
 from graph.nodes import (  # type: ignore
     custom_tool_node,
@@ -20,4 +20,4 @@ graph.add_edge("Input Validator", "Exploration Node")
 graph.add_edge("Exploration Node", "MongoDB")
 graph.add_edge("MongoDB", END)
 
-compiled_graph = graph.compile(debug=True)
+compiled_graph = graph.compile(debug=True)  # type: ignore
