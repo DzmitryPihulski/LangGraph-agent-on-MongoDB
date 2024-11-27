@@ -1,26 +1,12 @@
 import uuid
-from dataclasses import dataclass
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional
 
 import gensim.downloader as api  # type: ignore
 import numpy as np
 from chromadb import Client
 from chromadb.config import Settings
 
-
-@dataclass
-class Shot:
-    """
-    Data class representing a shot to be stored in the vector store.
-    That will be used to create fewshots prompts.
-
-    Attributes:
-        human_input (str): The query of the human
-        tool_call (dict): The dict of the tool calls
-    """
-
-    human_input: str
-    tool_call: Dict[str, Dict[str, Union[str, int, bool]]]
+from vector_store.few_shots import MONGO_SHOTS, Shot
 
 
 class VectorStore:
@@ -184,3 +170,7 @@ class VectorStore:
             )
 
         return formatted_results
+
+
+vector_db = VectorStore()
+vector_db.add_documents(MONGO_SHOTS)

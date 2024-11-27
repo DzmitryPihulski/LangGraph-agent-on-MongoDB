@@ -11,19 +11,13 @@ graph = StateGraph(state_schema=State)
 
 graph.add_node("Input Validator", input_validator)  # type: ignore
 graph.add_node("Exploration Node", exploration_node)  # type: ignore
-graph.add_node("MongoDB", custom_tool_node)
+graph.add_node("MongoDB", custom_tool_node)  # type: ignore
 
 graph.add_edge(START, "Input Validator")
 
 
-def conditional_edge(state: State):
-    if state["messages"][-1].tool_calls:
-        return "MongoDB"
-    return END
-
-
 graph.add_edge("Input Validator", "Exploration Node")
-graph.add_conditional_edges("Exploration Node", conditional_edge)
+graph.add_conditional_edges("Exploration Node", "MongoDB")
 graph.add_edge("MongoDB", END)
 
 compiled_graph = graph.compile(debug=True)

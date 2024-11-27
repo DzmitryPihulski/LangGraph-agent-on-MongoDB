@@ -1,11 +1,20 @@
 import json
 import urllib.request
-from typing import Dict, Literal
+from typing import Dict, List, Literal, Union
 
 from db.db import airbnb_db
 
 
-def replace_dollar_keys(obj: Dict) -> Dict:
+def replace_dollar_keys(obj: Union[Dict, List, str]) -> Union[Dict, str]:
+    """
+    Deletes the dollar sign from the source data.
+
+    Args:
+        obj (Dict): the data.
+
+    Returns:
+        Dict: formed data.
+    """
     if isinstance(obj, dict):
         # Iterate over the keys and values in the dictionary
         for key, value in list(obj.items()):
@@ -26,6 +35,12 @@ def replace_dollar_keys(obj: Dict) -> Dict:
 
 
 async def fetch_sample_data() -> Literal[True]:
+    """Fetches the documents from the source page and
+    adds to the database in the working collection.
+
+    Returns:
+        Literal[True]: whether the operation succeeded.
+    """
     url = "https://raw.githubusercontent.com/neelabalan/mongodb-sample-dataset/refs/heads/main/sample_airbnb/listingsAndReviews.json"
     response = urllib.request.urlopen(url)
     data = response.read().decode("utf-8")
