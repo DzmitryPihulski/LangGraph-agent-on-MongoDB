@@ -4,10 +4,10 @@ FROM python:3.9
 WORKDIR /
 
 
-COPY ./requirements.txt /requirements.txt
+COPY pyproject.toml pdm.lock* ./
 COPY ./src/ /
 
+RUN pip install pdm
+RUN pdm install --prod
 
-RUN pip install --no-cache-dir --upgrade -r /requirements.txt
-
-CMD uvicorn serve:app --host 0.0.0.0 --port ${APP_PORT} --reload
+CMD pdm run uvicorn serve:app --host 0.0.0.0 --port ${APP_PORT} --reload

@@ -17,7 +17,7 @@ graph.add_edge(START, "Input Validator")
 
 
 graph.add_edge("Input Validator", "Exploration Node")
-graph.add_conditional_edges("Exploration Node", "MongoDB")
+graph.add_edge("Exploration Node", "MongoDB")
 graph.add_edge("MongoDB", END)
 
 compiled_graph = graph.compile(debug=True)
