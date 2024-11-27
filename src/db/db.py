@@ -20,6 +20,11 @@ class MongoDatabase:
         self.config: MongoConfig = config
 
     def connect(self) -> Literal[True]:
+        """Connect to the db.
+
+        Returns:
+            Literal[True]: whether the connection succeeded.
+        """
         self.__mongo_client: MongoClient[Dict[str, Any]] = MongoClient(
             f"mongodb://{self.config.MONGO_LOGIN}:{self.config.MONGO_PASSWORD}@mongodb:{self.config.MONGO_PORT}"
         )
@@ -28,9 +33,19 @@ class MongoDatabase:
         return True
 
     def get_the_number_of_docs(self) -> int:
+        """Get the current number of documents in the working collection.
+
+        Returns:
+            int: the number of documents.
+        """
         return len(self.collection.find({}).to_list())
 
     def disconnect(self) -> Literal[True]:
+        """Disconnect from the db.
+
+        Returns:
+            Literal[True]: whether the disconnection succeeded.
+        """
         self.__mongo_client.close()
         return True
 

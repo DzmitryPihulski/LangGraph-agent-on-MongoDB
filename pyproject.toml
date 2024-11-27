@@ -1,70 +1,15 @@
 [project]
-name = "langgraph-agent-mongo"
-version = "1.0.1"
-description = ""
+name = "LangGraph-agent-on-MongoDB"
+version = "0.1.0"
+description = "Default template for PDM package"
 authors = [
     {name = "Dzmitry Pihulski", email = "dim.pigulsky@gmail.com"},
 ]
-requires-python = ">=3.8"
+dependencies = ["annotated-types==0.7.0", "anyio==4.6.2.post1", "certifi==2024.8.30", "cfgv==3.4.0", "charset-normalizer==3.4.0", "gensim>=4.3.3", "langchain-mistralai==0.2.0", "click==8.1.7", "colorama==0.4.6", "chromadb>=0.5.20", "distlib==0.3.9", "exceptiongroup==1.2.2", "fastapi==0.115.2", "filelock==3.16.1", "h11==0.14.0", "httpcore==1.0.6", "sse-starlette==2.1.3", "httpx==0.27.2", "httpx-sse==0.4.0", "identify==2.6.1", "idna==3.10", "jsonpatch==1.33", "jsonpointer==3.0.0", "langchain-core==0.3.10", "langdetect==1.0.9", "langgraph==0.2.36", "langgraph-checkpoint==2.0.1", "langgraph-sdk==0.1.33", "langserve==0.3.0", "langsmith==0.1.135", "msgpack==1.1.0", "nodeenv==1.9.1", "orjson==3.10.7", "packaging==24.1", "platformdirs==4.3.6", "pydantic==2.9.2", "pydantic-core==2.23.4", "pymongo==4.10.1", "python-dotenv==1.0.1", "PyYAML==6.0.2", "requests==2.32.3", "requests-toolbelt==1.0.0", "ruff==0.6.9", "six==1.16.0", "sniffio==1.3.1", "starlette==0.39.2", "tenacity==8.5.0", "typing-extensions==4.12.2", "urllib3==2.2.3", "uvicorn==0.31.1", "virtualenv==20.26.6"]
+requires-python = "==3.11.*"
 readme = "README.md"
+license = {text = "MIT"}
 
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
 
-[tool.ruff]
-# Enable flake8-bugbear (`B`) rules.
-select = ["E", "F", "B", "I"]
-
-# Same as Black.
-line-length = 88
-
-# Allow unused variables when underscore-prefixed.
-dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
-
-# Exclude a variety of commonly ignored directories.
-exclude = [
-    ".bzr",
-    ".direnv",
-    ".eggs",
-    ".git",
-    ".git-rewrite",
-    ".hg",
-    ".mypy_cache",
-    ".nox",
-    ".pants.d",
-    ".pytype",
-    ".ruff_cache",
-    ".svn",
-    ".tox",
-    ".venv",
-    "__pypackages__",
-    "_build",
-    "buck-out",
-    "build",
-    "dist",
-    "node_modules",
-    "venv",
-]
-
-# Assume Python 3.8
-target-version = "py38"
-
-[tool.ruff.mccabe]
-# Unlike Flake8, default to a complexity level of 10.
-max-complexity = 10
-
-[tool.mypy]
-python_version = "3.8"
-warn_return_any = true
-warn_unused_configs = true
-disallow_untyped_defs = true
-disallow_incomplete_defs = true
-check_untyped_defs = true
-disallow_untyped_decorators = true
-no_implicit_optional = true
-warn_redundant_casts = true
-warn_unused_ignores = true
-warn_no_return = true
-warn_unreachable = true
-strict_equality = true
+[tool.pdm]
+distribution = false
