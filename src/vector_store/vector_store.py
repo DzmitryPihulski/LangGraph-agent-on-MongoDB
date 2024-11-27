@@ -158,7 +158,7 @@ class VectorStore:
         query_embedding = self._create_embedding(query)
 
         results = self.collection.query(
-            query_embeddings=[query_embedding],
+            query_embeddings=[query_embedding],  # type: ignore
             n_results=n_results,
         )
 

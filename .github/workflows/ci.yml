@@ -1,0 +1,33 @@
+name: Python CI
+
+on:
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  lint-and-typecheck:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install PDM
+        run: |
+          pip install pdm
+
+      - name: Install dependencies
+        run: |
+          pdm install
+
+      - name: Run Ruff Linter on src
+        run: |
+          pdm run ruff check src/
+
+      - name: Run MyPy Type Checking on src
+        run: |
+          pdm run mypy src/

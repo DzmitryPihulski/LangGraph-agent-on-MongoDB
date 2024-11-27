@@ -57,7 +57,7 @@ def custom_tool_node(
                 )
             )
     return {
-        "messages": outputs,
+        "messages": outputs,  # type: ignore
         "answer": str([str(output.content) for output in outputs]),  # type: ignore
     }
 
