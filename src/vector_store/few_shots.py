@@ -26,6 +26,13 @@ MONGO_SHOTS = [
         },
     ),
     Shot(
+        human_input="Show me all apartments with 6 bedrooms.",
+        tool_call={
+            "filter": {"bedrooms": "7"},
+            "projection": {"listing_url": 1, "name": 1, "bedrooms": 1},
+        },
+    ),
+    Shot(
         human_input="Shom me the summary of property Ribeira Charming Duplex",
         tool_call={
             "filter": {"name": "Ribeira Charming Duplex"},
