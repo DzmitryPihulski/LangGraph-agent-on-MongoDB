@@ -15,6 +15,8 @@ This agent helps MongoDB for efficient retrieval in natural language.
 
 The idea is that the user nows the type of information in the DB and instead of using SQL, NoSQL queries, asks agent in natural language, than the agent does the search.
 
+The agent generates **filters and projections** only, so multi-collection iteractions are **not allowed**.
+
 ## Results
 
 The agent works perfect with queries in format `Show me smth in the appartment that has something.`
